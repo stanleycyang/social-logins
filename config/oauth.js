@@ -1,4 +1,5 @@
 // Configure all the ids, secrets, and callback urls
+require('dotenv').load();
 
 var ids = {
   facebook: {
@@ -7,13 +8,13 @@ var ids = {
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
   },
   twitter: {
-    consumerKey: TW_CONSUMER_KEY,
-    consumerSecret: TW_CONSUMER_SECRET,
+    consumerKey: process.env.TW_CONSUMER_KEY,
+    consumerSecret: process.env.TW_CONSUMER_SECRET,
     callbackURL: 'http://localhost:3000/auth/twitter/callback'
   },
   github: {
-    clientID: GH_CLIENT_ID,
-    clientSecret: GH_CLIENT_SECRET,
+    clientID: process.env.GH_CLIENT_ID,
+    clientSecret: process.env.GH_CLIENT_SECRET,
     callbackURL: 'http://localhost:3000/auth/github/callback'
   },
   google: {
