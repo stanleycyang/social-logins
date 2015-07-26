@@ -18,7 +18,8 @@ passport.use(new FacebookStrategy({
       User.create({
         facebookID: profile.id,
         firstName: profile.name.givenName,
-        lastName: profile.name.familyName
+        lastName: profile.name.familyName,
+        FBToken: accessToken
       });
     }
     return done(error, person);

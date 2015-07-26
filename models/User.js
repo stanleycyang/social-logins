@@ -8,6 +8,14 @@ var userSchema = new Schema({
       unique: true
     }
   },
+  twitterID: {
+    type: String,
+    index: {
+      unique: true
+    }
+  },
+  FBToken: String,
+  TWToken: String,
   firstName: String,
   lastName: String
 });
