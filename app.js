@@ -1,13 +1,34 @@
-var config = require('./config/oauth');
+// Source in OAuth configuration
+require('dotenv').load();
 var express = require('express');
+var passport = require('passport');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var session = require('express-session');
+var methodOverride = require('method-override');
 
+// Facebook Strategy
+var Facebook = require('./config/facebook');
+
+
+// Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var social = require('./routes/social');
+
+// If authentication succeeds, a session will be established and maintained via cookie set in the user's browser. Passport will serialize and deserialize the user instances to and from the session
+
+passport.serializeUser(function(user, done){
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done){
+  done(null, obj);
+});
 
 var app = express();
 
@@ -21,10 +42,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(methodOverride());
+// Set the session secret
+app.use(session({secret: process.env.SECRET}));
+// Initialize passport and start the session
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/', social);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
