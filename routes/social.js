@@ -21,11 +21,20 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
 });
 
 // Google routes
-router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
+router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}), function(request, response, next){
   response.redirect('/');
 });
+
+// Check if user is logged in
+function isLoggedIn(request, response, next){
+  // If they are authenticated, carry on
+  if(request.isAuthenticated())
+    return next;
+  // If they aren't, redirect them to the home page
+  response.redirect('/');
+}
 
 
 module.exports = router;
