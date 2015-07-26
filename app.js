@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost/passport_social');
 // Facebook Strategy
 var Facebook = require('./config/facebook');
 var Twitter = require('./config/twitter');
+var Google = require('./config/google');
 
 
 // Routes

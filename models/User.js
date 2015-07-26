@@ -16,8 +16,14 @@ var userSchema = new Schema({
   },
   FBToken: String,
   TWToken: String,
-  firstName: String,
-  lastName: String
+  TWTokenSecret: String,
+  email: {
+    type: String,
+    index: {
+      unique: true
+    }
+  },
+  name: String
 });
 
 module.exports = mongoose.model('User', userSchema);

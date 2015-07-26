@@ -12,14 +12,15 @@ passport.use(new FacebookStrategy({
 }, function(accessToken, refreshToken, profile, done){
   // Uses FB account and OAuth 2.0
   // requires a verify callback, which accepts the credentials and calls done providing a user, and optionally enabling appsecret_proof
+  // Pull user profile pic 'http://graph.facebook.com/' + profile.id + '/picture'
 
-  User.find({facebookID: profile.id}, function(error, person){
+  User.find({email: profile._json.email}, function(error, person){
     if(person.length === 0){
       User.create({
         facebookID: profile.id,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        FBToken: accessToken
+        FBToken: accessToken,
+        name: profile.displayName,
+        email: profile._json.email
       });
     }
     return done(error, person);
