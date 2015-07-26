@@ -9,12 +9,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 // Connect to our local database
 mongoose.connect('mongodb://localhost/passport_social');
 
 // Facebook Strategy
 var Facebook = require('./config/facebook');
+var Twitter = require('./config/twitter');
 
 
 // Routes
@@ -46,6 +48,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(methodOverride());
 // Initialize passport and start the session
+app.use(session({secret: process.env.SECRET}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
