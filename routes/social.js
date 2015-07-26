@@ -24,6 +24,14 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
 router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}), function(request, response, next){
+  response.redirect('http://localhost:3000');
+});
+
+// Instagram routes
+router.get('/auth/instagram', passport.authenticate('instagram'));
+
+router.get('/auth/instagram/callback', passport.authenticate('instagram', {failureRedirect: '/login'}), function(request, response){
+  // Successful authentication, redirect home
   response.redirect('/');
 });
 

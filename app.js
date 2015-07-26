@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost/passport_social');
 var Facebook = require('./config/facebook');
 var Twitter = require('./config/twitter');
 var Google = require('./config/google');
-
+var Instagram = require('./config/instagram');
 
 // Routes
 var routes = require('./routes/index');
