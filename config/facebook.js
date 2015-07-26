@@ -2,7 +2,8 @@
 require('dotenv').load();
 
 var passport = require('passport'),
-    FacebookStrategy = require('passport-facebook').Strategy;
+    FacebookStrategy = require('passport-facebook').Strategy,
+    User = require('../models/User');
 
 passport.use(new FacebookStrategy({
   clientID: process.env.FB_CLIENT_ID,
@@ -11,11 +12,18 @@ passport.use(new FacebookStrategy({
 }, function(accessToken, refreshToken, profile, done){
   // Uses FB account and OAuth 2.0
   // requires a verify callback, which accepts the credentials and calls done providing a user, and optionally enabling appsecret_proof
-  /*User.findOrCreate({facebookId: profile.id}, function(error, user){*/
-    //// Send back the error and the user
-    //return done(error, user);
-  /*});*/
-  return done(null, profile);
+
+  User.find({facebookID: profile.id}, function(error, person){
+    if(person.length === 0){
+      User.create({
+        facebookID: profile.id,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName
+      });
+    }
+    return done(error, person);
+  });
+  /*return done(null, profile);*/
 }
 
 ));

@@ -8,8 +8,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var session = require('express-session');
 var methodOverride = require('method-override');
+
+// Connect to our local database
+mongoose.connect('mongodb://localhost/passport_social');
 
 // Facebook Strategy
 var Facebook = require('./config/facebook');
@@ -43,8 +45,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(methodOverride());
-// Set the session secret
-app.use(session({secret: process.env.SECRET}));
 // Initialize passport and start the session
 app.use(passport.initialize());
 app.use(passport.session());
