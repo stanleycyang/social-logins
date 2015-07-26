@@ -21,6 +21,11 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
 });
 
 // Google routes
+router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
+
+router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}), function(request, response, next){
+  response.redirect('/');
+});
 
 
 module.exports = router;
