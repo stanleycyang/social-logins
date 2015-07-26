@@ -35,6 +35,20 @@ router.get('/auth/instagram/callback', passport.authenticate('instagram', {failu
   response.redirect('/');
 });
 
+// Linkedin routes
+router.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
+
+router.get('/auth/linkedin/callback', passport.authenticate('linkedin', {failureRedirect: '/login'}), function(request, response){
+  response.redirect('/');
+});
+
+// Github routes
+router.get('/auth/github', passport.authenticate('github'));
+
+router.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/login'}), function(request, response, next){
+  response.redirect('/');
+});
+
 // Check if user is logged in
 function isLoggedIn(request, response, next){
   // If they are authenticated, carry on

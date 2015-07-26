@@ -19,6 +19,8 @@ var Facebook = require('./config/facebook');
 var Twitter = require('./config/twitter');
 var Google = require('./config/google');
 var Instagram = require('./config/instagram');
+var LinkedIn = require('./config/linkedin');
+var Github = require('./config/github');
 
 // Routes
 var routes = require('./routes/index');
